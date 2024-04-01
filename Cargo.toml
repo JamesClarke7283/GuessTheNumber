@@ -1,0 +1,3 @@
+[workspace]
+members = ["libguess", "guessui"]
+resolver = "2"
