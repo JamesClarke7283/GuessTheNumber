@@ -1,4 +1,5 @@
 use rand::prelude::*;
+use std::cmp::Ordering;
 
 /// Represents a number guessing game.
 pub struct Game {
@@ -162,12 +163,10 @@ impl GameTrait for Game {
 /// assert_eq!(compare(6, 5), GuessResult::TooHigh);
 /// ```
 pub fn compare(guess: u32, secret: u32) -> GuessResult {
-    if guess == secret {
-        GuessResult::Correct
-    } else if guess < secret {
-        GuessResult::TooLow
-    } else {
-        GuessResult::TooHigh
+    match guess.cmp(&secret) {
+        Ordering::Equal => GuessResult::Correct,
+        Ordering::Less => GuessResult::TooLow,
+        Ordering::Greater => GuessResult::TooHigh,
     }
 }
 
