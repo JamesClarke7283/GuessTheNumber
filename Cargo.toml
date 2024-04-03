@@ -1,5 +1,5 @@
 [workspace]
-members = ["libguess", "guessui"]
+members = ["libguess", "guessui-iced"]
 resolver = "2"
 
 # Lints
