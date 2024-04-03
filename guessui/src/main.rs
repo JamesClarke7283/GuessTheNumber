@@ -4,6 +4,7 @@ use iced::{Element, Sandbox, Settings};
 use libguess::{Game, GameTrait, GuessResult};
 use rand::rngs::StdRng;
 use rand::SeedableRng;
+use std::time::{SystemTime, UNIX_EPOCH};
 
 pub fn main() -> iced::Result {
     GuessUI::run(Settings::default())
@@ -25,15 +26,16 @@ enum Message {
 impl Sandbox for GuessUI {
     type Message = Message;
 
-    fn new() -> Self {
-        let mut rng = StdRng::from_seed(Default::default());
-        let game = Game::new(None, None, None, &mut rng);
-        Self {
-            game,
-            guess_input: String::new(),
-            message: String::new(),
-        }
+fn new() -> Self {
+    let seed = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs();
+    let mut rng = StdRng::seed_from_u64(seed);
+    let game = Game::new(None, None, None, &mut rng);
+    Self {
+        game,
+        guess_input: String::new(),
+        message: String::new(),
     }
+}
 
     fn title(&self) -> String {
         String::from("Guess the Number")
